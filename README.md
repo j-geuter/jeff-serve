@@ -46,7 +46,7 @@ pip install -r requirements.txt && pip install .
 jeff-serve /models/Jeff-1.0-Large --host 127.0.0.1 --port 8013     # or the repo id jgeuter/Jeff-1.0-Large
 ```
 
-Tested with Python 3.12, torch 2.13.0 (CUDA 13.0), transformers 5.17.0 (`requirements.txt`). The server turns off
+Tested with Python 3.12, torch 2.13.0 (CUDA 13.0), transformers 5.17.0 and accelerate 1.15.0 (`requirements.txt`). The server turns off
 PyTorch's cuDNN attention kernel for inputs under 8,192 tokens: it rebuilds an execution plan for every new input
 length, which made each request 2x (H200) to 10x (H100) slower without changing any answer.
 
