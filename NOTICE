@@ -1,0 +1,16 @@
+Jeff serving code
+Copyright 2026 Jonathan Geuter, Andrew Cheng, David Alvarez-Melis
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This software contains code derived from the following projects:
+
+- SemIf (https://github.com/TheoLeeCJ/SemIf), MIT License.
+  Copyright (c) 2026 TheoLeeCJ
+  src/jeff/prompting.py reimplements SemIf's prompt construction (system message, JSON payload, answer letters A-P).
+
+- JevBench (https://github.com/fstandhartinger/jevbench), MIT License.
+  Copyright (c) 2026 Florian Standhartinger and contributors
+  src/jeff/typesafe.py maps TypeSafe questions to multiple-choice rows the way JevBench's semif_direct adapter does.
+
+Model weights (Jeff-1.0-Large) are released separately on Hugging Face under their own licence; see the model card.
+They are derived from google/gemma-4-31B-it (Apache License 2.0).

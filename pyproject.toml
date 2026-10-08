@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jeff"
+version = "1.0.0"
+description = "Serving code for Jeff decision models (TypeSafe System One wire format, as used by JevBench)"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [{name = "Jonathan Geuter"}, {name = "Andrew Cheng"}, {name = "David Alvarez-Melis"}]
+# Exact versions we tested with are pinned in requirements.txt (and the Dockerfile).
+dependencies = ["torch>=2.11", "transformers>=5.17", "safetensors>=0.5", "huggingface_hub>=1.0"]
+
+[project.scripts]
+jeff-serve = "jeff.serve:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
