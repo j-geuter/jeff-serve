@@ -45,8 +45,12 @@ def model_folder(ref: str | Path, revision: str | None = None) -> Path:
     path = Path(ref).expanduser()
     if path.is_dir():
         return path
+    text = str(ref)
+    if text.startswith((".", "/", "~")) or text.count("/") != 1:   # a path, not a Hugging Face repo id like org/name
+        raise FileNotFoundError(f"model folder not found: {text}. Download the weights first, e.g. "
+                                f"`hf download jgeuter/Jeff-1.0-Large --local-dir {text}`, or pass a repo id.")
     from huggingface_hub import snapshot_download
-    return Path(snapshot_download(str(ref), revision=revision))
+    return Path(snapshot_download(text, revision=revision))
 
 
 def load_causal_model(folder: Path, device: str = "cuda", dtype: str = "bfloat16"):

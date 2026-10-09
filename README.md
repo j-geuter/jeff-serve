@@ -23,7 +23,7 @@ Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is `P(yes
 
 ```bash
 # 1. Fetch the weights (pin the revision you want; about 62 GB).
-huggingface-cli download jgeuter/Jeff-1.0-Large --local-dir /models/Jeff-1.0-Large
+hf download jgeuter/Jeff-1.0-Large --local-dir /models/Jeff-1.0-Large
 # 2. Build and serve (one GPU with at least 80 GB, e.g. H100 80GB, H200 or RTX PRO 6000 96GB).
 docker build -t jeff .
 docker run --gpus '"device=0"' -v /models/Jeff-1.0-Large:/model:ro -p 8013:8013 jeff
