@@ -41,6 +41,8 @@ jeff-serve /models/Jeff-1.0-Large --host 127.0.0.1 --port 8013     # or the repo
 ```
 
 Tested with Python 3.12, torch 2.13.0 (CUDA 13.0), transformers 5.17.0 and accelerate 1.15.0 (`requirements.txt`).
+The machine needs a C compiler (e.g. `gcc`): Triton, which torch uses for some GPU operations, compiles a small
+helper with it on the first request. The GPU driver must support CUDA 13.0 (R580 or newer).
 
 ## Request/response format
 
