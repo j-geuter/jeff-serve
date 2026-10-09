@@ -9,20 +9,15 @@ The server speaks TypeSafe's "System One" wire format, so JevBench's stock `type
 
 ## How it works
 
-Each question is rendered as a multiple-choice prompt (the SemIf template: a short system message and a JSON object
-with the state, the question and the options labeled A, B, C, ...), with the model's chat template and thinking
-disabled. The model reads the prompt once. A decision head turns the last hidden state into one logit per option:
+Each question is rendered as a multiple-choice prompt. A decision head turns the last hidden state into one logit per option:
 
 $$z = \mathrm{softcap}(W_0 h) + A\,\mathrm{std}(h) + b,$$
 
-where $W_0$ are the language-model-head rows of the answer letters, so training started exactly at the model's own
-letter readout. The softmax over the options gives the probabilities. A serving rule then applies one temperature
-per question type (fitted on our own validation data, never below 1) and moves yes/no answers with
-$0.2 < P(\text{yes}) < 0.8$ to just outside the nearer edge (0.801 or 0.199), because JevBench counts answers inside
-that band as abstentions.
+where $W_0$ are the language-model-head rows of the answer letters (A, B, C, etc.), so training starts exactly at the model's own
+letter readout. A softmax over the options gives the probabilities.
 
 Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is $P(\text{yes})$) and `score` (ordered levels,
-2 to 16). Inputs up to 8,192 tokens; longer inputs get HTTP 422.
+2 to 16). Inputs up to 8,192 tokens.
 
 ## Run with Docker
 
@@ -45,9 +40,7 @@ pip install -r requirements.txt && pip install .
 jeff-serve /models/Jeff-1.0-Large --host 127.0.0.1 --port 8013     # or the repo id jgeuter/Jeff-1.0-Large
 ```
 
-Tested with Python 3.12, torch 2.13.0 (CUDA 13.0), transformers 5.17.0 and accelerate 1.15.0 (`requirements.txt`). The server turns off
-PyTorch's cuDNN attention kernel for inputs under 8,192 tokens: it rebuilds an execution plan for every new input
-length, which made each request 2x (H200) to 10x (H100) slower without changing any answer.
+Tested with Python 3.12, torch 2.13.0 (CUDA 13.0), transformers 5.17.0 and accelerate 1.15.0 (`requirements.txt`).
 
 ## Wire format
 
