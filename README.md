@@ -16,7 +16,7 @@ where $W_0$ are the language-model-head rows of the answer letters (A, B, C, ...
 soft-capping, $\mathrm{std}(h)$ standardizes each feature with statistics computed once on training data, and the
 learned correction $A$, $b$ starts at zero, so training starts exactly at the model's own letter readout.
 
-Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is $P(\text{yes})$) and `score` (ordered levels,
+Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is `P(yes)`) and `score` (ordered levels,
 2 to 16). Inputs up to 8,192 tokens.
 
 ## Run with Docker
