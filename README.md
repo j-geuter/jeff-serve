@@ -1,20 +1,20 @@
 # Jeff: Jev-style decision models from open LLMs
 
-Serving code for **Jeff-1.0-Large**, a Jev-style decision model: a state, a typed question and its options go in, and
-one forward pass returns a probability for each option. Nothing is generated.
+Serving code for **Jeff-1.0-Large**, a Jev-style decision model: a state, a typed question, and its options go in, and
+one forward pass returns a probability for each option, all in a single forward pass.
 
 - Model weights: [jgeuter/Jeff-1.0-Large](https://huggingface.co/jgeuter/Jeff-1.0-Large) (Gemma 4 31B + LoRA, merged)
-  
-The server speaks TypeSafe's "System One" wire format, so JevBench's stock `typesafe` adapter can call it directly.
 
 ## How it works
 
-Each question is rendered as a multiple-choice prompt. A decision head turns the last hidden state into one logit per option:
+Each question is rendered as a multiple-choice prompt. A decision head turns the last hidden state $h$ into one
+logit per option, and a softmax over the $K$ options gives the probabilities:
 
-$$z = \mathrm{softmax}(W_0 h + A \mathrm{std}(h) + b),$$
+$$z = c\tanh(W_0 h / c) + A\,\mathrm{std}(h) + b, \qquad p = \mathrm{softmax}(z_1, \dots, z_K),$$
 
-where $W_0$ are the language-model-head rows of the answer letters (A, B, C, etc.), so training starts exactly at the model's own
-letter readout. Here, std denotes a normalization and A and b constitute a learned classification head. The softmax turns logits into a probability distribution.
+where $W_0$ are the language-model-head rows of the answer letters (A, B, C, ...), $c = 30$ is Gemma's final-logit
+soft-capping, $\mathrm{std}(h)$ standardizes each feature with statistics computed once on training data, and the
+learned correction $A$, $b$ starts at zero, so training starts exactly at the model's own letter readout.
 
 Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is $P(\text{yes})$) and `score` (ordered levels,
 2 to 16). Inputs up to 8,192 tokens.
@@ -42,7 +42,7 @@ jeff-serve /models/Jeff-1.0-Large --host 127.0.0.1 --port 8013     # or the repo
 
 Tested with Python 3.12, torch 2.13.0 (CUDA 13.0), transformers 5.17.0 and accelerate 1.15.0 (`requirements.txt`).
 
-## Wire format
+## Request/response format
 
 ```
 POST /v1/systemone
