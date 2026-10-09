@@ -11,10 +11,10 @@ The server speaks TypeSafe's "System One" wire format, so JevBench's stock `type
 
 Each question is rendered as a multiple-choice prompt. A decision head turns the last hidden state into one logit per option:
 
-$$z = \mathrm{softcap}(W_0 h) + A\,\mathrm{std}(h) + b,$$
+$$z = \mathrm{softmax}(W_0 h + A \mathrm{std}(h) + b),$$
 
 where $W_0$ are the language-model-head rows of the answer letters (A, B, C, etc.), so training starts exactly at the model's own
-letter readout. A softmax over the options gives the probabilities.
+letter readout. The softmax turns logits into a probability distribution.
 
 Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is $P(\text{yes})$) and `score` (ordered levels,
 2 to 16). Inputs up to 8,192 tokens.
