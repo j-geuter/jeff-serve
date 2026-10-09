@@ -14,7 +14,7 @@ Each question is rendered as a multiple-choice prompt. A decision head turns the
 $$z = \mathrm{softmax}(W_0 h + A \mathrm{std}(h) + b),$$
 
 where $W_0$ are the language-model-head rows of the answer letters (A, B, C, etc.), so training starts exactly at the model's own
-letter readout. The softmax turns logits into a probability distribution.
+letter readout. Here, std denotes a normalization and A and b constitute a learned classification head. The softmax turns logits into a probability distribution.
 
 Question types: `choice` (2 to 16 options), `noul` (yes/no; the answer is $P(\text{yes})$) and `score` (ordered levels,
 2 to 16). Inputs up to 8,192 tokens.
