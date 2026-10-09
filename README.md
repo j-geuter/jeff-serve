@@ -4,7 +4,7 @@ Serving code for **Jeff-1.0-Large**, a Jev-style decision model: a state, a type
 one forward pass returns a probability for each option. Nothing is generated.
 
 - Model weights: [jgeuter/Jeff-1.0-Large](https://huggingface.co/jgeuter/Jeff-1.0-Large) (Gemma 4 31B + LoRA, merged)
-- 
+  
 The server speaks TypeSafe's "System One" wire format, so JevBench's stock `typesafe` adapter can call it directly.
 
 ## How it works
