@@ -10,7 +10,7 @@ one forward pass returns a probability for each option, all in a single forward 
 Each question is rendered as a multiple-choice prompt. A decision head turns the last hidden state $h$ into one
 logit per option, and a softmax over the $K$ options gives the probabilities:
 
-$$z = c\tanh(W_0 h / c) + A\,\mathrm{std}(h) + b, \qquad p = \mathrm{softmax}(z_1, \dots, z_K),$$
+$$z = c\tanh(W_0 h / c) + A \mathrm{std}(h) + b, \qquad p = \mathrm{softmax}(z_1, \dots, z_K),$$
 
 where $W_0$ are the language-model-head rows of the answer letters (A, B, C, ...), $c = 30$ is Gemma's final-logit
 soft-capping, $\mathrm{std}(h)$ standardizes each feature with statistics computed once on training data, and the
