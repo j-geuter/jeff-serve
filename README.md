@@ -5,6 +5,8 @@ one forward pass returns a probability for each option, all in a single forward 
 
 - Model weights: [jgeuter/Jeff-1.0-Large](https://huggingface.co/jgeuter/Jeff-1.0-Large) (Gemma 4 31B + LoRA, merged)
 
+Work in progress, come back soon for more models!
+
 ## How it works
 
 Each question is rendered as a multiple-choice prompt. A decision head turns the last hidden state $h$ into one
